@@ -174,7 +174,87 @@ Studied about various annotations.
 ## @Around() - it surrounds the method execution (runs before and after both)
 
 ### Syntax:
-![Project Screenshot](images/screenshot.png)
+![Project Screenshot](images/screenshot1.png)
 
 
 # VIDEO NO - 59
+
+## Content studied - (@Transactional Annotation)
+
+- If you are using Relational DB, you have to add JPA dependency in pom.xml file
+##### NOTE - Spring by default used JPA Transactional Manager
+- You also have to add database driver and configuration details in application.properties file
+
+- Can be applied to class level (for all public methods) or method level (particular method)
+- @Transactional - this annotation bring all the ACID properties with it
+- Generally, @Around type AOP is used for transactional
+
+
+# VIDEO NO - 60
+
+## Cotent studied - (Transactional Annotation | Declarative,Programmatic Approach & Propagation)
+
+### Transaction Management Types:
+
+#### Declarative: 
+- Using @Transactional annotation
+
+#### Programmatic:
+- You write your own code of Transaction Management
+- Flexible but difficult to maintain
+
+### Propogation
+- When we try to create a new Transcation, it first check the PROPOGATION value set and this tell whether we have to create new transaction or not
+
+##### REQUIRED (default propogation):
+![Project Screenshot](images/screenshot2.png)
+
+#### REQUIRED_NEW:
+![Project Screenshot](images/screenshot3.png)
+
+#### SUPPORTS:
+![Project Screenshot](images/screenshot4.png)
+
+#### NOT_SUPPORTED:
+![Project Screenshot](images/screenshot5.png)
+
+#### MANDATORY:
+![Project Screenshot](images/screenshot6.png)
+
+#### NEVER:
+![Project Screenshot](images/screenshot7.png)
+
+
+# VIDEO NO - 61
+
+## Content studied - ( @Transactional Annotation | Isolation Level and its types)
+
+- It tells, how the changes made by one transaction are visible to other transactions running in parallel.
+
+- By default, isolation level value depends on the database which we are using.
+- Most relational database uses READ_COMMITED as default isolation.
+
+### Problems which can occur in Concurrency:
+#### Dirty Read Problem: 
+- Transaction A reads the un-committed data of other transaction and if other transaction get ROLLED BACK, the un-committed data which is read by Transaction A is known as Dirty Read.
+
+#### Non-Repeatable Read Problem
+- If suppose Trans A reads the same row several times and there is a chance that it get different value, then its known as Non-Repeatable Read Problem
+
+#### Phantom Read Problem
+- If suppose Trans A executes same query several times but there is a chance that rows returned are differnt. Then it s known as Phantom Read Problem.
+
+### DB Locking Types:
+1. Shared Lock (S) - also known as Read Lock - more than one shared lock can be there on one data. At the time of shared Lock, Exclusive lock is not allowed.
+2. Exclusive Lock (X) - also known as Write Lock - at the time one exclusive lock, not shared and exclusive lock is allowed.
+
+
+### ISOLATION LEVEL TABLE:
+![Project Screenshot](images/screenshot8.png)
+![Project Screenshot](images/screenshot9.png)
+
+### Use Cases of Isolation Levels:
+- Read Uncommitted -> When your use case is to only read the data.
+- Read Committed -> 
+- Repeatable Read ->
+- Serializable -> 
