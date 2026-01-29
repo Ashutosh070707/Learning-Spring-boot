@@ -1,8 +1,6 @@
 # VIDEO NO - 52
 
 ## Content studied: (Annotations)
-Studied about various annotations.
-
 - @Component
 - @Bean
 - @Autowired
@@ -27,28 +25,24 @@ Studied about various annotations.
 # VIDEO NO - 53
 
 ## Content Studied: (Dependency Injection)
-
 - Types - Field Injections, Setter Injection, Constructor Injection
 
 
 # VIDEO NO - 54
 
-## Content Studied: ( Bean Scopes | Singleton, Prototype, Request, Session Scopes)
+## Content Studied: (Bean Scopes | Singleton, Prototype, Request, Session Scopes)
 
 ### Singleton Scope
 - Default scope of any bean is Singleton (means only one instance of this class is created by IOC).
 - Singleton are eagarly initialized.
-
 - @Scope("singleton")
 
 ### Prototype Scope
-
 - Each time new Object is created.
 - Its lazily initialized
 - @Scope("prototype")
 
 ### Request Scope
-
 - New object is created for each HTTP request. and only for http requests, its bean is created.
 - Lazily initialized
 - @Scope("request")
@@ -56,11 +50,9 @@ Studied about various annotations.
 ### Scenario: 
 - Suppose you have a singleton scope class and inside it, you used autowired for a class object whose scope is "request". Now at the time of running the application, the bean creation will fail and give error because singleton classes are eagarly initialized, when IOC try to creates its bean, it try to inject the autowired object, but that autowired object is marked with "request" scope and objects of request scope only get created for http requests and here there is no http request called right now.
 - So, to solve this problem, we insert a dummy object initially to prevent breaking of the bean creation. We put following syntax at the top of "request" scope bean
-
 - @Scope(value = "request", proxyMode = ScopedProxy.TARGET_CLASS)
 
 ### Session Scope
-
 - New object is created for each HTTP session
 - Lazy initialized
 - When user accesses any endpoint, session is created
@@ -78,7 +70,7 @@ Studied about various annotations.
 ## Content Studied - (@ConditionalOnProperty Annotation)
 
 - Bean is created conditionally
-### How can we unclutter our application when started - using @ConditionalOnProperty - **INTERVIEW QUESTION
+#### NOTE - How can we unclutter our application when started - using @ConditionalOnProperty - **INTERVIEW QUESTION
 
 - You put it on top of the class which you want to create conditionally
 - Syntax -> @ConditionalOnProperty(prefix = "sqlconnection", value = "enabled", havingValue = "true", matchIfMissing = false/true)
@@ -89,7 +81,7 @@ Studied about various annotations.
 ### This sqlconnection.enabled=anyString is stored in the application.properties file. To fulfill the condition for creating the bean, havingValue should match with the prefix.value (here value is "true"). If not matched , bean is not created. Suppose if prefix.value is not present in the application.properties file, then matchIfMissing is used.
 
 
-# VIDEO NNO - 57
+# VIDEO NO - 57
 
 ## Content studied - (Profiling and @Profile annotation)
 
@@ -120,60 +112,60 @@ Studied about various annotations.
 - @Aspect - used this at the top of the class which contains the code (function) which you want to run before or after 
 - @Before("execution(method name before or after you want to run this particular code)")
 
-## Use wildcards
+### Use wildcards
 
-### (*) -> Match any return type
+#### (*) -> Match any return type
 
 - @Before("execution(* com.concept.learning.Employee.fetchEmployee())") -> match particular method with any return type 
 - @Before("execution(* com.concept.learning.Employee.*(String))") -> match any method with any return type which takes a string as argument
 - @Before("execution(String com.concept.learning.Employee.fetchEmployee(*))") -> match particular method with string return type and takes atleast one arguments
 
-### (..) -> Match 0 or more item
+#### (..) -> Match 0 or more item
 
 - @Before("execution(String com.concept.learning.Employee.fetchEmployee(..))") -> match particular method with string return type and takes 0 or more arguments
 - @Before("execution(String com.concept..fetchEmployee())") -> match fetchEmployee method with string return type but from any package inside concept or concept package
 - @Before("execution(String com.concept..*())") -> match with all the methods inside concept and its subpackages
 
 
-### Within - Matches all method within any class or package
+#### Within - Matches all method within any class or package
 
 - @Before("within(com.concept.learning.Employee)")
 - @Before("within(com.concept.learning..*))
 
-### @within - Matches any method in a class which has this annotation
+#### @within - Matches any method in a class which has this annotation
 
 - @Before("@within(org.springGramework.stereotype.Service)") -> any class which has @Service annotation, all methods within that class matches
 
-### @annotation - matches any method that is annotated with given annotation
+#### @annotation - matches any method that is annotated with given annotation
 
 - @Before("@annotation(org.springframework.web.bind.annotation.GetMapping)")
 
-### Args - match any method with particular arguments
+#### Args - match any method with particular arguments
 
 - @Before("args(String, int)")
 - @Before("args(com.concepty.learning.Employee, int)")
 
-### @args - matches any method with particular parameters and that parameter class is annotated with aprticular annotation
+#### @args - matches any method with particular parameters and that parameter class is annotated with aprticular annotation
 
 - @Before("@args(orgs.springframework.stereotype.Service)")
 
 
-### target - matches any method on a particular instance of a class
+#### target - matches any method on a particular instance of a class
 
 - @Before("target(com.concept.learning.EmployeeUtil)") - whenever instance of this class is used to call any method within it.
 - @Before("target(com.concept.learning.IEmployee)") - same as above by for interface
 
-### Combining two pointcuts using && and ||
+#### Combining two pointcuts using && and ||
 
 - @Before("execution(* com.concept.learning.Employee.*())" + "&& @within(org.springframework.web.bind.annotation.RestController)")
 
 ### Custom Named Pointcut - watch from Gemini
 
-## Advise - the function which runs when any pointcut matches
+### Advise - the function which runs when any pointcut matches
 
-## @Around() - it surrounds the method execution (runs before and after both)
+### @Around() - it surrounds the method execution (runs before and after both) - AOP annotation
 
-### Syntax:
+#### Syntax:
 ![Project Screenshot](images/screenshot1.png)
 
 
@@ -182,7 +174,7 @@ Studied about various annotations.
 ## Content studied - (@Transactional Annotation)
 
 - If you are using Relational DB, you have to add JPA dependency in pom.xml file
-##### NOTE - Spring by default used JPA Transactional Manager
+#### NOTE - Spring by default used JPA Transactional Manager
 - You also have to add database driver and configuration details in application.properties file
 
 - Can be applied to class level (for all public methods) or method level (particular method)
@@ -203,10 +195,10 @@ Studied about various annotations.
 - You write your own code of Transaction Management
 - Flexible but difficult to maintain
 
-### Propogation
+#### Propogation
 - When we try to create a new Transcation, it first check the PROPOGATION value set and this tell whether we have to create new transaction or not
 
-##### REQUIRED (default propogation):
+### REQUIRED (default propogation):
 ![Project Screenshot](images/screenshot2.png)
 
 #### REQUIRED_NEW:
@@ -235,6 +227,7 @@ Studied about various annotations.
 - Most relational database uses READ_COMMITED as default isolation.
 
 ### Problems which can occur in Concurrency:
+
 #### Dirty Read Problem: 
 - Transaction A reads the un-committed data of other transaction and if other transaction get ROLLED BACK, the un-committed data which is read by Transaction A is known as Dirty Read.
 
@@ -244,7 +237,7 @@ Studied about various annotations.
 #### Phantom Read Problem
 - If suppose Trans A executes same query several times but there is a chance that rows returned are differnt. Then it s known as Phantom Read Problem.
 
-### DB Locking Types:
+#### DB Locking Types:
 1. Shared Lock (S) - also known as Read Lock - more than one shared lock can be there on one data. At the time of shared Lock, Exclusive lock is not allowed.
 2. Exclusive Lock (X) - also known as Write Lock - at the time one exclusive lock, not shared and exclusive lock is allowed.
 
@@ -258,3 +251,96 @@ Studied about various annotations.
 - Read Committed -> 
 - Repeatable Read ->
 - Serializable -> 
+
+
+# VIDEO NO - 62
+
+## Content studied - (@Async Annotation)
+
+### Async Annotation
+- Used to mark method that should run asynchronously
+- Runs in a new thread, without blocking the main thread
+##### Syntax 
+- @EnableAsync - put on top of SprinbootApplication class to tell springboot to create async beans.
+- @Async - put on methods which you want to run in a new thread
+
+### Use Case 1 - Using default ThreadPoolTaskExecutor
+![Default ThreadPoolTaskExecutor](images/screenshot10.png)
+
+#### Disadvantages of this default ThreadPoolTaskExecutor:
+![alt text](images/screenshot11.png)
+
+##### NOTE - We should never use this default ThreadPoolExecutor, we should create custom ThreadPoolExecutor
+
+### Use Case 2 - Creating custom ThreadPoolTaskExecutor
+![alt text](images/screenshot12.png)
+![alt text](images/screenshot13.png)
+![alt text](images/screenshot14.png)
+
+### Use Case 3 - Using custom ThreadPoolExecutor (java one)
+
+#### NOTE - To use this java ThredPoolTask Executor, it is cumpulsory to mention it inside async notation
+![alt text](images/screenshot15.png)
+![alt text](images/screenshot16.png)
+
+### Use Case 4 - In industry, we do this to remove the overhead of giving name in async annotation again and again
+![alt text](images/screenshot17.png)
+![alt text](images/screenshot18.png)
+
+# VIDEO NO - 63
+
+## Content studied - (Async Annotation Important Interview questions)
+![alt text](images/screenshot19.png)
+
+![alt text](images/screenshot20.png)
+![alt text](images/shot1.png)
+#### Correct and statnd way used in industry
+![alt text](images/shot2.png)
+
+
+### @Async method return type
+- You can also use CompletableFuture
+![alt text](images/shot3.png)
+
+
+### Exception Hadling in Async
+
+#### Type 1 - when the function has return type
+- We use Futute/CompletableFuture .get() method, and it any error come we should hanle using catch block here
+![alt text](images/shot4.png)
+
+#### Type 2 - when the function has no return type (void)
+![alt text](images/shot5.png)
+![alt text](images/shot6.png)
+
+- Spring boot by default provide AsyncUncaughtExceptionHandler to caught and handle async exception, but we can also create our custom asyncExceptionHandler (Industry pratice)
+![alt text](images/shot7.png)
+
+
+# VIDEO NO - 64
+
+## Content studied - (Custom Interceptors | How to Intercept Incoming HTTP Request & Custom Annotation)
+
+### Interceptor
+- It is a mediator which get invoked before or after your actual code
+
+- For creating custom interception, we have to implement HandleIntercepter interface and give implementation of these three methods and you have to do registry for which endpoints this interceptor have to run before hitting those endpoints
+![alt text](images/shot8.png)
+![alt text](images/shot9.png)
+
+- We can also add interceptor after a paticular endpoints hits.
+
+#### Custom Annotation creation:
+- Kuch samajh nhi aaya , baad me dekh lena jab jarurat hogi
+
+
+# VIDEO NO - 65
+
+## Content studied - (Filters vs Interceptors | Filters & Interceptors Advantage and Usecases for both)
+
+![alt text](images/shot10.png)
+
+##### Can so refer resources provided in each video
+
+#### What is Servlet?
+- Servlet is nothing but a Java class, which accepts the incoming request, process it and returns the response
